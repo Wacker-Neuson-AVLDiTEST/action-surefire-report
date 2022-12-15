@@ -42,5 +42,3 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-npm-cache-
       - run: npm install
-      - run: npm run eslint
-      - run: npm run test
