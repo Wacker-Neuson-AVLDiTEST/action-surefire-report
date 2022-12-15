@@ -13,7 +13,7 @@ const resolveFileAndLine = (file, classname, output) => {
     const [, line] = lastItem.split(':');
     core.debug(`Resolved file ${filename} and line ${line}`);
 
-    return { filename, line: parseInt(line) };
+    return { filename: filename.replace('.java', '.atl'), line: parseInt(line) };
 };
 
 const resolvePath = async filename => {
@@ -53,15 +53,15 @@ async function parseFile(file) {
     const testsuites = report.testsuite
         ? [report.testsuite]
         : Array.isArray(report.testsuites.testsuite)
-            ? report.testsuites.testsuite
-            : [report.testsuites.testsuite];
+        ? report.testsuites.testsuite
+        : [report.testsuites.testsuite];
 
     for (const testsuite of testsuites) {
         const testcases = Array.isArray(testsuite.testcase)
             ? testsuite.testcase
             : testsuite.testcase
-                ? [testsuite.testcase]
-                : [];
+            ? [testsuite.testcase]
+            : [];
         for (const testcase of testcases) {
             count++;
             if (testcase.skipped) skipped++;
